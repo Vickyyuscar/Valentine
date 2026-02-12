@@ -8,22 +8,14 @@
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #0d1117; color: #c9d1d9; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; }
         .container { background: #161b22; padding: 30px; border-radius: 12px; border: 1px solid #30363d; width: 380px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; }
         #ticket, #error-page, #feedback, #final-success { display: none; }
-        
-        /* Progress Bar */
         .progress-bar { width: 100%; height: 8px; background: #30363d; border-radius: 5px; margin-top: 15px; overflow: hidden; }
         .progress-fill { width: 0%; height: 100%; background: #238636; transition: width 0.3s; }
-        
-        /* Buttons */
         button { padding: 12px 20px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; }
         #yesBtn { background: #238636; color: white; width: 100%; }
         #noBtn { background: #8b949e; position: absolute; transition: 0.1s; z-index: 100; font-size: 0.8rem; }
         #kissBtn { background: #f852ad; color: white; width: 100%; }
-        
-        /* Text Styles */
         .error-text { color: #f85149; font-weight: bold; font-family: 'Courier New', monospace; }
         .highlight { color: #58a6ff; font-weight: bold; }
-        
-        /* Feedback */
         .stars { font-size: 2.2rem; cursor: pointer; margin: 15px 0; }
         .star { color: #30363d; transition: 0.2s; }
         .star.active { color: #f1e05a; }
@@ -51,18 +43,16 @@
 
     <div id="error-page">
         <h3 class="error-text">⚠️ SYSTEM CRITICAL ERROR</h3>
-        <p>Fatal Exception: <span class="error-text">Brain_OS.sys</span> has been corrupted by extreme affection!</p>
-        <p style="font-size: 0.85rem;">Repair status: Manual Kiss installation required to reboot.</p>
+        <p>Fatal Exception: <span class="error-text">Brain_OS.sys</span> has been corrupted!</p>
         <p id="click-count" style="font-weight: bold; color: #f852ad;">Click 3 times to install kisses...</p>
-        
         <img id="bubu-kiss" src="bubu_kiss.gif" class="gif-display">
         <button id="kissBtn" onclick="installKisses()">INSTALL KISS</button>
         <button id="fixDone" style="display:none; background:#238636; color:white; width:100%;" onclick="showFeedback()">Reboot Successful: Proceed</button>
     </div>
 
     <div id="feedback">
-        <h3 style="color: #79c0ff;">Ticket: #LOVE-2026</h3>
-        <p>Rate your Lifetime Valentine Support:</p>
+        <h3 style="color: #79c0ff;">Ticket Resolved!</h3>
+        <p>Rate your Support Engineer:</p>
         <div class="stars">
             <span class="star" onclick="submitRating(1)">★</span>
             <span class="star" onclick="submitRating(2)">★</span>
@@ -81,7 +71,6 @@
 </div>
 
 <script>
-    // Audio Context for the Beep
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep() {
         const osc = audioCtx.createOscillator();
@@ -91,23 +80,20 @@
         osc.type = 'square'; 
         osc.frequency.setValueAtTime(440, audioCtx.currentTime);
         gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.2);
+        osc.start(); osc.stop(audioCtx.currentTime + 0.2);
     }
 
-    // 1. Loading
     let progress = 0;
     const loadInt = setInterval(() => {
-        progress += 5;
+        progress += 10;
         document.getElementById('fill').style.width = progress + "%";
         if (progress >= 100) {
             clearInterval(loadInt);
             document.getElementById('loader').style.display = 'none';
             document.getElementById('ticket').style.display = 'block';
         }
-    }, 100);
+    }, 150);
 
-    // 2. The Tricky No Button
     function moveNo() {
         const btn = document.getElementById('noBtn');
         const box = document.getElementById('box');
@@ -115,15 +101,12 @@
         btn.style.top = Math.random() * (box.offsetHeight - btn.offsetHeight) + "px";
     }
 
-    // 3. Error Page with Beep
     function triggerError() {
-        playBeep();
-        setTimeout(playBeep, 300); 
+        playBeep(); setTimeout(playBeep, 300);
         document.getElementById('ticket').style.display = 'none';
         document.getElementById('error-page').style.display = 'block';
     }
 
-    // 4. Kiss Installation
     let clicks = 0;
     function installKisses() {
         clicks++;
@@ -131,14 +114,13 @@
         if (clicks < 3) {
             countText.innerText = (3 - clicks) + " more clicks to fix Brain_OS...";
         } else {
-            countText.innerText = "Brain_OS.sys is back online! ❤️";
+            countText.innerText = "Brain_OS.sys repaired! ❤️";
             document.getElementById('bubu-kiss').style.display = 'block';
             document.getElementById('kissBtn').style.display = 'none';
             document.getElementById('fixDone').style.display = 'block';
         }
     }
 
-    // 5. Feedback
     function showFeedback() {
         document.getElementById('error-page').style.display = 'none';
         document.getElementById('feedback').style.display = 'block';
@@ -149,6 +131,8 @@
         const img = document.getElementById('dudu-gif');
         stars.forEach((s, i) => s.classList.toggle('active', i < n));
         img.style.display = "block";
+        
+        // Final Fix: Force the paths
         if (n === 1) img.src = "dudu_cry.gif";
         else if (n === 2) img.src = "dudu_sad.gif";
         else img.src = "dudu_happy.gif";
