@@ -3,21 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IT Support Portal - Ticket #2026</title>
+    <title>IT Support Portal - Lifetime Deployment</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #0d1117; color: #c9d1d9; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; }
-        .container { background: #161b22; padding: 30px; border-radius: 12px; border: 1px solid #30363d; width: 350px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; }
-        #ticket, #feedback, #final-success { display: none; }
+        .container { background: #161b22; padding: 30px; border-radius: 12px; border: 1px solid #30363d; width: 380px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; }
+        #ticket, #error-page, #feedback, #final-success { display: none; }
+        
+        /* Progress Bar */
         .progress-bar { width: 100%; height: 8px; background: #30363d; border-radius: 5px; margin-top: 15px; overflow: hidden; }
         .progress-fill { width: 0%; height: 100%; background: #238636; transition: width 0.3s; }
-        button { padding: 10px 20px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; }
-        #yesBtn { background: #238636; color: white; transition: 0.3s; }
-        #yesBtn:hover { background: #2ea043; }
-        #noBtn { background: #8b949e; position: absolute; transition: 0.1s; z-index: 100; }
-        .stars { font-size: 2rem; cursor: pointer; margin: 15px 0; }
+        
+        /* Buttons */
+        button { padding: 12px 20px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        #yesBtn { background: #238636; color: white; width: 100%; }
+        #noBtn { background: #8b949e; position: absolute; transition: 0.1s; z-index: 100; font-size: 0.8rem; }
+        #kissBtn { background: #f852ad; color: white; width: 100%; }
+        
+        /* Text Styles */
+        .error-text { color: #f85149; font-weight: bold; font-family: 'Courier New', monospace; }
+        .highlight { color: #58a6ff; font-weight: bold; }
+        
+        /* Feedback */
+        .stars { font-size: 2.2rem; cursor: pointer; margin: 15px 0; }
         .star { color: #30363d; transition: 0.2s; }
         .star.active { color: #f1e05a; }
-        textarea { width: 90%; background: #0d1117; color: white; border: 1px solid #30363d; border-radius: 4px; padding: 10px; margin-top: 10px; resize: none; font-family: inherit; }
+        textarea { width: 90%; background: #0d1117; color: white; border: 1px solid #30363d; border-radius: 4px; padding: 10px; margin-top: 10px; resize: none; }
         .gif-display { width: 150px; margin: 10px auto; border-radius: 10px; display: none; }
     </style>
 </head>
@@ -25,87 +35,125 @@
 
 <div class="container" id="box">
     <div id="loader">
-        <h3 style="margin: 0;">System Diagnostics...</h3>
+        <h3 style="margin-bottom: 5px;">System Initialization</h3>
+        <p style="font-size: 0.8rem; color: #8b949e;">Checking for <span class="highlight">Vicky Lifetime</span> compatibility...</p>
         <div class="progress-bar"><div class="progress-fill" id="fill"></div></div>
-        <p style="font-size: 0.8rem; color: #8b949e; margin-top: 10px;">Checking Valentine protocols...</p>
     </div>
 
     <div id="ticket">
-        <h2 style="color: #58a6ff; margin-top: 0;">Critical Request</h2>
-        <p>Deploy <strong>Valentine_Protocol_v2.0</strong>?</p>
-        <div style="height:120px; margin-top: 20px;">
-            <button id="yesBtn" onclick="showFeedback()">YES (Accept)</button>
-            <button id="noBtn" onmouseover="moveNo()">NO (Abort)</button>
+        <h2 style="color: #58a6ff; margin-top: 0;">Deployment Ready</h2>
+        <p>If you want <span class="highlight">Vicky</span> as your lifetime Valentine, please proceed with the deployment.</p>
+        <div style="height:140px; position:relative; margin-top:20px;">
+            <button id="yesBtn" onclick="triggerError()">DEPLOY: Valentine_Lifetime_v2.0</button>
+            <button id="noBtn" onmouseover="moveNo()">Reject Deployment</button>
         </div>
     </div>
 
+    <div id="error-page">
+        <h3 class="error-text">⚠️ SYSTEM CRITICAL ERROR</h3>
+        <p>Fatal Exception: <span class="error-text">Brain_OS.sys</span> has been corrupted by extreme affection!</p>
+        <p style="font-size: 0.85rem;">Repair status: Manual Kiss installation required to reboot.</p>
+        <p id="click-count" style="font-weight: bold; color: #f852ad;">Click 3 times to install kisses...</p>
+        
+        <img id="bubu-kiss" src="bubu kiss.gif" class="gif-display">
+        <button id="kissBtn" onclick="installKisses()">INSTALL KISS</button>
+        <button id="fixDone" style="display:none; background:#238636; color:white; width:100%;" onclick="showFeedback()">Reboot Successful: Proceed</button>
+    </div>
+
     <div id="feedback">
-        <h3 style="color: #79c0ff; margin-top: 0;">Ticket Resolved!</h3>
-        <p>Rate your Support Engineer:</p>
+        <h3 style="color: #79c0ff;">Ticket: #LOVE-2026</h3>
+        <p>Rate your Lifetime Valentine Support:</p>
         <div class="stars">
             <span class="star" onclick="submitRating(1)">★</span>
             <span class="star" onclick="submitRating(2)">★</span>
             <span class="star" onclick="submitRating(3)">★</span>
         </div>
         <img id="dudu-gif" class="gif-display">
-        <textarea id="comment" placeholder="Leave a support note..."></textarea>
-        <button style="background:#2188ff; color:white; width: 100%;" onclick="finalize()">Submit & Close Ticket</button>
+        <textarea id="comment" placeholder="Leave a feedback note for Vicky..."></textarea>
+        <button style="background:#2188ff; color:white; width:100%;" onclick="finalize()">Submit & Close Ticket</button>
     </div>
 
     <div id="final-success">
         <h1 style="font-size: 3.5rem; margin: 0;">❤️</h1>
-        <h3 style="color: #2ea043;">Access Granted!</h3>
-        <p>System status: <strong>Fully Synced</strong></p>
-        <p style="font-size: 0.8rem; color: #8b949e;">Happy Valentine's Day! 🚀</p>
+        <h3 style="color: #2ea043;">Deployment Complete!</h3>
+        <p>Vicky is now officially your <br><strong>Lifetime Valentine</strong>.</p>
     </div>
 </div>
 
 <script>
-    // 1. Loading Simulation
+    // Audio Context for the Beep
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playBeep() {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.type = 'square'; // Classic IT beep sound
+        osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.2);
+    }
+
+    // 1. Loading
     let progress = 0;
-    const fill = document.getElementById('fill');
-    const interval = setInterval(() => {
-        progress += 5;
-        fill.style.width = progress + "%";
+    const loadInt = setInterval(() => {
+        progress += 10;
+        document.getElementById('fill').style.width = progress + "%";
         if (progress >= 100) {
-            clearInterval(interval);
+            clearInterval(loadInt);
             document.getElementById('loader').style.display = 'none';
             document.getElementById('ticket').style.display = 'block';
         }
-    }, 100);
+    }, 250);
 
-    // 2. The Tricky "No" Button
+    // 2. The Tricky No Button
     function moveNo() {
         const btn = document.getElementById('noBtn');
         const box = document.getElementById('box');
-        
-        // Calculate bounds so it stays near the container but moves away
-        const newX = Math.random() * (box.offsetWidth - btn.offsetWidth);
-        const newY = Math.random() * (box.offsetHeight - btn.offsetHeight);
-        
-        btn.style.left = newX + "px";
-        btn.style.top = newY + "px";
+        btn.style.left = Math.random() * (box.offsetWidth - btn.offsetWidth) + "px";
+        btn.style.top = Math.random() * (box.offsetHeight - btn.offsetHeight) + "px";
     }
 
-    // 3. Feedback Logic
-    function showFeedback() {
+    // 3. Error Page with Beep
+    function triggerError() {
+        playBeep();
+        setTimeout(playBeep, 300); // Double beep for "Error"
         document.getElementById('ticket').style.display = 'none';
+        document.getElementById('error-page').style.display = 'block';
+    }
+
+    // 4. Kiss Installation
+    let clicks = 0;
+    function installKisses() {
+        clicks++;
+        const countText = document.getElementById('click-count');
+        if (clicks < 3) {
+            countText.innerText = (3 - clicks) + " more clicks to fix Brain_OS...";
+        } else {
+            countText.innerText = "Brain_OS.sys is back online! ❤️";
+            document.getElementById('bubu-kiss').style.display = 'block';
+            document.getElementById('kissBtn').style.display = 'none';
+            document.getElementById('fixDone').style.display = 'block';
+        }
+    }
+
+    // 5. Feedback
+    function showFeedback() {
+        document.getElementById('error-page').style.display = 'none';
         document.getElementById('feedback').style.display = 'block';
     }
 
     function submitRating(n) {
         const stars = document.querySelectorAll('.star');
         const img = document.getElementById('dudu-gif');
-        
         stars.forEach((s, i) => s.classList.toggle('active', i < n));
-        
         img.style.display = "block";
         if (n === 1) img.src = "dudu cry.gif";
         else if (n === 2) img.src = "dudu sad.gif";
         else img.src = "dudu happy.gif";
     }
 
-    // 4. Final Success
     function finalize() {
         document.getElementById('feedback').style.display = 'none';
         document.getElementById('final-success').style.display = 'block';
