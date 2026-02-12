@@ -27,7 +27,7 @@
         .stars { font-size: 2.2rem; cursor: pointer; margin: 15px 0; }
         .star { color: #30363d; transition: 0.2s; }
         .star.active { color: #f1e05a; }
-        textarea { width: 90%; background: #0d1117; color: white; border: 1px solid #30363d; border-radius: 4px; padding: 10px; margin-top: 10px; resize: none; }
+        textarea { width: 90%; background: #0d1117; color: white; border: 1px solid #30363d; border-radius: 4px; padding: 10px; margin-top: 10px; resize: none; font-family: inherit; }
         .gif-display { width: 150px; margin: 10px auto; border-radius: 10px; display: none; }
     </style>
 </head>
@@ -55,7 +55,7 @@
         <p style="font-size: 0.85rem;">Repair status: Manual Kiss installation required to reboot.</p>
         <p id="click-count" style="font-weight: bold; color: #f852ad;">Click 3 times to install kisses...</p>
         
-        <img id="bubu-kiss" src="bubu kiss.gif" class="gif-display">
+        <img id="bubu-kiss" src="bubu_kiss.gif" class="gif-display">
         <button id="kissBtn" onclick="installKisses()">INSTALL KISS</button>
         <button id="fixDone" style="display:none; background:#238636; color:white; width:100%;" onclick="showFeedback()">Reboot Successful: Proceed</button>
     </div>
@@ -88,7 +88,7 @@
         const gain = audioCtx.createGain();
         osc.connect(gain);
         gain.connect(audioCtx.destination);
-        osc.type = 'square'; // Classic IT beep sound
+        osc.type = 'square'; 
         osc.frequency.setValueAtTime(440, audioCtx.currentTime);
         gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
         osc.start();
@@ -98,14 +98,14 @@
     // 1. Loading
     let progress = 0;
     const loadInt = setInterval(() => {
-        progress += 10;
+        progress += 5;
         document.getElementById('fill').style.width = progress + "%";
         if (progress >= 100) {
             clearInterval(loadInt);
             document.getElementById('loader').style.display = 'none';
             document.getElementById('ticket').style.display = 'block';
         }
-    }, 250);
+    }, 100);
 
     // 2. The Tricky No Button
     function moveNo() {
@@ -118,7 +118,7 @@
     // 3. Error Page with Beep
     function triggerError() {
         playBeep();
-        setTimeout(playBeep, 300); // Double beep for "Error"
+        setTimeout(playBeep, 300); 
         document.getElementById('ticket').style.display = 'none';
         document.getElementById('error-page').style.display = 'block';
     }
@@ -149,9 +149,9 @@
         const img = document.getElementById('dudu-gif');
         stars.forEach((s, i) => s.classList.toggle('active', i < n));
         img.style.display = "block";
-        if (n === 1) img.src = "dudu cry.gif";
-        else if (n === 2) img.src = "dudu sad.gif";
-        else img.src = "dudu happy.gif";
+        if (n === 1) img.src = "dudu_cry.gif";
+        else if (n === 2) img.src = "dudu_sad.gif";
+        else img.src = "dudu_happy.gif";
     }
 
     function finalize() {
